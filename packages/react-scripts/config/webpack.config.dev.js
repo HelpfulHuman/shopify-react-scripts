@@ -14,7 +14,9 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+var WatchMissingNodeModulesPlugin = require(
+  'react-dev-utils/WatchMissingNodeModulesPlugin'
+);
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
 
@@ -111,16 +113,18 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [{
-          // @remove-on-eject-begin
-          // Point ESLint to our predefined config.
-          options: {
-            configFile: path.join(__dirname, '../.eslintrc'),
-            useEslintrc: false
-          },
-          // @remove-on-eject-end
-          loader: 'eslint-loader'
-        }],
+        use: [
+          {
+            // @remove-on-eject-begin
+            // Point ESLint to our predefined config.
+            options: {
+              configFile: path.join(__dirname, '../.eslintrc'),
+              useEslintrc: false
+            },
+            // @remove-on-eject-end
+            loader: 'eslint-loader'
+          }
+        ],
         include: paths.appSrc
       },
       // ** ADDING/UPDATING LOADERS **
@@ -132,13 +136,7 @@ module.exports = {
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
       // Otherwise, it acts like the "file" loader.
       {
-        exclude: [
-          /\.html$/,
-          /\.(js|jsx)$/,
-          /\.css$/,
-          /\.json$/,
-          /\.svg$/
-        ],
+        exclude: [/\.html$/, /\.(js|jsx)$/, /\.css$/, /\.json$/, /\.svg$/],
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -169,26 +167,28 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader', {
+          'style-loader',
+          {
             loader: 'css-loader',
             options: {
               importLoaders: 1
             }
-          }, {
+          },
+          {
             loader: 'postcss-loader',
             options: {
               ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-              plugins: function () {
+              plugins: function() {
                 return [
                   autoprefixer({
                     browsers: [
                       '>1%',
                       'last 4 versions',
                       'Firefox ESR',
-                      'not ie < 9', // React doesn't support IE8 anyway
+                      'not ie < 9' // React doesn't support IE8 anyway
                     ]
                   })
-                ]
+                ];
               }
             }
           }
@@ -202,6 +202,7 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
+
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
@@ -215,7 +216,7 @@ module.exports = {
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,
-      template: paths.appHtml,
+      template: paths.appHtml
     }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.

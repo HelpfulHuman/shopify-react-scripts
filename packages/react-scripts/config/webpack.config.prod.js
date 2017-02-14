@@ -51,8 +51,8 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // However, our output is structured with css, js and media folders.
 // To have this structure working with relative paths, we have to use custom options.
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
-  // Making sure that the publicPath goes back to to build folder.
-  ? {publicPath: Array(cssFilename.split('/').length).join('../')}
+  ? // Making sure that the publicPath goes back to to build folder.
+    { publicPath: Array(cssFilename.split('/').length).join('../') }
   : {};
 
 // This is the production configuration.
@@ -65,10 +65,7 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: 'source-map',
   // In production, we only want to load the polyfills and the app code.
-  entry: [
-    require.resolve('./polyfills'),
-    paths.appIndexJs
-  ],
+  entry: [require.resolve('./polyfills'), paths.appIndexJs],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -116,18 +113,20 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [{
-          // @remove-on-eject-begin
-          // Point ESLint to our predefined config.
-          options: {
-            // TODO: consider separate config for production,
-            // e.g. to enable no-console and no-debugger only in production.
-            configFile: path.join(__dirname, '../.eslintrc'),
-            useEslintrc: false
-          },
-          // @remove-on-eject-end
-          loader: 'eslint-loader'
-        }],
+        use: [
+          {
+            // @remove-on-eject-begin
+            // Point ESLint to our predefined config.
+            options: {
+              // TODO: consider separate config for production,
+              // e.g. to enable no-console and no-debugger only in production.
+              configFile: path.join(__dirname, '../.eslintrc'),
+              useEslintrc: false
+            },
+            // @remove-on-eject-end
+            loader: 'eslint-loader'
+          }
+        ],
         include: paths.appSrc
       },
       // ** ADDING/UPDATING LOADERS **
@@ -139,13 +138,7 @@ module.exports = {
       // "url" loader embeds assets smaller than specified size as data URLs to avoid requests.
       // Otherwise, it acts like the "file" loader.
       {
-        exclude: [
-          /\.html$/,
-          /\.(js|jsx)$/,
-          /\.css$/,
-          /\.json$/,
-          /\.svg$/
-        ],
+        exclude: [/\.html$/, /\.(js|jsx)$/, /\.css$/, /\.json$/, /\.svg$/],
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -160,8 +153,8 @@ module.exports = {
         // @remove-on-eject-begin
         options: {
           babelrc: false,
-          presets: [require.resolve('babel-preset-react-app')],
-        },
+          presets: [require.resolve('babel-preset-react-app')]
+        }
         // @remove-on-eject-end
       },
       // The notation here is somewhat confusing.
@@ -178,34 +171,40 @@ module.exports = {
       // in the main CSS file.
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract(Object.assign({
-          fallback: 'style-loader',
-          use: [
+        loader: ExtractTextPlugin.extract(
+          Object.assign(
             {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1
-              }
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
-                plugins: function () {
-                  return [
-                    autoprefixer({
-                      browsers: [
-                        '>1%',
-                        'last 4 versions',
-                        'Firefox ESR',
-                        'not ie < 9', // React doesn't support IE8 anyway
-                      ]
-                    })
-                  ]
+              fallback: 'style-loader',
+              use: [
+                {
+                  loader: 'css-loader',
+                  options: {
+                    importLoaders: 1
+                  }
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+                    plugins: function() {
+                      return [
+                        autoprefixer({
+                          browsers: [
+                            '>1%',
+                            'last 4 versions',
+                            'Firefox ESR',
+                            'not ie < 9' // React doesn't support IE8 anyway
+                          ]
+                        })
+                      ];
+                    }
+                  }
                 }
-              }
-            }
-          ]
-        }, extractTextPluginOptions))
+              ]
+            },
+            extractTextPluginOptions
+          )
+        )
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
       // "file" loader for svg
@@ -216,6 +215,7 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]'
         }
       }
+
       // ** STOP ** Are you adding a new loader?
       // Remember to add the new extension(s) to the "url" loader exclusion list.
     ]
