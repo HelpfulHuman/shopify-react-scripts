@@ -70,7 +70,6 @@ scripts_path="$root_path"/packages/react-scripts/`npm pack`
 rm package.json
 mv package.json.orig package.json
 
-
 # ******************************************************************************
 # Now that we have packed them, call the global CLI.
 # ******************************************************************************
@@ -84,3 +83,8 @@ node packages/create-react-app/index.js --scripts-version="$scripts_path" "$@"
 
 # Cleanup
 cleanup
+
+# *******************************************************************************
+# Replace the template located in /src with a newly cloned react-shopify-template
+# *******************************************************************************
+./rst.sh
