@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 git clone https://github.com/MyronBatiuk/react-shopify-storefront.git
 

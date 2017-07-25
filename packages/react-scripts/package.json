@@ -17,6 +17,9 @@
     "template",
     "utils"
   ],
+  "scripts": {
+    "init": "./cra.sh"
+  },
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
