@@ -20,6 +20,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const chalk = require('chalk');
 const spawn = require('react-dev-utils/crossSpawn');
+const exec = require('child_process').exec;
 
 module.exports = function(
   appPath,
@@ -70,6 +71,17 @@ module.exports = function(
     );
     return;
   }
+
+  console.log("ADD SHOPIFY TEMPLATE FROM GITHUB");
+  var script = "git clone https://github.com/MyronBatiuk/react-shopify-storefront.git && \
+    rm -rf src && \
+    mv -f react-shopify-storefront/src src && \
+    rm -rf react-shopify-storefront"
+  exec(script, function(err, stdout, stderr) {
+    // console.log("ERR: ", err);
+    // console.log("STDOUT: ", stdout);
+    // console.log("STDERR: ", stderr)
+  });
 
   // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
   // See: https://github.com/npm/npm/issues/1862
